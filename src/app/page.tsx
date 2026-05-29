@@ -3,29 +3,43 @@ import CountdownHero from '@/components/dashboard/CountdownHero';
 import QuickStats from '@/components/dashboard/QuickStats';
 import FeaturedStadium from '@/components/dashboard/FeaturedStadium';
 import MatchCard from '@/components/matches/MatchCard';
+import OpeningMatchBanner from '@/components/matches/OpeningMatchBanner';
 import NewsCard from '@/components/news/NewsCard';
 import CommandCenter from '@/components/ai/CommandCenter';
 import MyTeams from '@/components/teams/MyTeams';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ViewAllLink from '@/components/ui/ViewAllLink';
 import QuickAccessLinks from '@/components/ui/QuickAccessLinks';
-import { getUpcomingMatches, getFeaturedNews, getTeams } from '@/lib/data/adapters';
+import { getUpcomingMatches, getFeaturedNews, getTeams, getMatchById } from '@/lib/data/adapters';
 
 export const metadata: Metadata = {
   title: 'World Cup HQ — FIFA World Cup 2026 Dashboard',
 };
 
 export default async function HomePage() {
-  const [upcoming, featured, allTeams] = await Promise.all([
+  const [upcoming, featured, allTeams, openingMatch] = await Promise.all([
     getUpcomingMatches(6),
     getFeaturedNews(4),
     getTeams(),
+    getMatchById('m001'),
   ]);
 
   return (
     <div className="p-4 md:p-6 space-y-10 max-w-7xl mx-auto pb-24">
       {/* Hero countdown */}
       <CountdownHero />
+
+      {/* Opening Match Feature Card */}
+      {openingMatch && (
+        <section>
+          <SectionHeader
+            title="The Tournament Begins"
+            accent="Opening Match · Jun 11"
+            subtitle="The 2026 FIFA World Cup kicks off at the home of football"
+          />
+          <OpeningMatchBanner match={openingMatch} />
+        </section>
+      )}
 
       {/* Tournament overview */}
       <section>

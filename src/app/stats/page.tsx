@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import { getPlayerStats, getTeamStats } from '@/lib/data/adapters';
+import { getPlayerStats, getTeamStats, getTeams, getAllPlayers } from '@/lib/data/adapters';
 import TopScorers from '@/components/stats/TopScorers';
 import GroupTable from '@/components/stats/GroupTable';
+import PowerRankings from '@/components/stats/PowerRankings';
 import SectionHeader from '@/components/ui/SectionHeader';
 import StatCard from '@/components/stats/StatCard';
 
@@ -10,11 +11,16 @@ export const metadata: Metadata = { title: 'Statistics' };
 const GROUPS = 'ABCDEFGHIJKL'.split('');
 
 export default async function StatsPage() {
-  const [players, teamStats] = await Promise.all([getPlayerStats(), getTeamStats()]);
+  const [players, teamStats, allTeams, allPlayers] = await Promise.all([
+    getPlayerStats(),
+    getTeamStats(),
+    getTeams(),
+    getAllPlayers(),
+  ]);
   const totalGoals = players.reduce((s, p) => s + p.goals, 0);
 
   return (
-    <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-10 pb-24">
+    <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-12 pb-24">
       <SectionHeader title="Tournament Statistics" accent="Live Stats"
         subtitle="Updated in real-time from June 11, 2026" />
 
@@ -25,6 +31,18 @@ export default async function StatsPage() {
         <StatCard label="Red Cards"       value={0}          icon="🟥" accent="red"   subLabel="Tournament total" />
         <StatCard label="Goals / Match"   value="—"          icon="📊" accent="green" subLabel="Avg per game" />
       </div>
+
+      {/* ── PRE-TOURNAMENT POWER RANKINGS ── */}
+      <div className="relative">
+        <div className="absolute inset-0 rounded-2xl pointer-events-none"
+          style={{ background: 'linear-gradient(135deg, rgba(214,171,87,0.04) 0%, transparent 60%)' }} />
+        <div className="relative">
+          <PowerRankings teams={allTeams} players={allPlayers} />
+        </div>
+      </div>
+
+      {/* Separator */}
+      <div className="h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--border-mid), transparent)' }} />
 
       {/* Tournament leaders + top scorers */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

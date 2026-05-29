@@ -7,6 +7,7 @@ import FollowButton from '@/components/teams/FollowButton';
 import Badge from '@/components/ui/Badge';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Link from 'next/link';
+import { formatMatchDate, formatMatchTime } from '@/lib/utils';
 
 interface PageProps { params: Promise<{ slug: string }> }
 
@@ -22,6 +23,8 @@ const CONF_VARIANT: Record<string, 'sky' | 'green' | 'gold' | 'red' | 'gray'> = 
 };
 
 const POS_ORDER = ['GK', 'CB', 'LB', 'RB', 'CDM', 'CM', 'CAM', 'LW', 'RW', 'ST', 'CF'];
+
+const COUNTRY_FLAG: Record<string, string> = { USA: '🇺🇸', Mexico: '🇲🇽', Canada: '🇨🇦' };
 
 export default async function TeamPage({ params }: PageProps) {
   const { slug } = await params;
@@ -44,19 +47,34 @@ export default async function TeamPage({ params }: PageProps) {
   const primary = team.colors.primary;
   const secondary = team.colors.secondary;
 
+  // group rivals — opponents in the group stage
+  const groupOpponents = teamMatches.slice(0, 3).map(m => {
+    const opponent = m.homeTeam?.id === team.id ? m.awayTeam : m.homeTeam;
+    return { match: m, opponent };
+  });
+
   return (
     <div className="pb-24" style={{ '--team-primary': primary, '--team-secondary': secondary } as React.CSSProperties}>
-      {/* Hero */}
+      {/* ── HERO ── */}
       <div className="relative overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, ${primary}22 0%, var(--navy-card) 60%, var(--navy) 100%)`,
-          borderBottom: `1px solid ${primary}33`,
+          background: `linear-gradient(135deg, ${primary}55 0%, ${primary}28 45%, var(--navy) 100%)`,
+          borderBottom: `1px solid ${primary}44`,
         }}>
+        {/* Thin animated color bar at very top */}
         <div className="h-1" style={{ background: `linear-gradient(90deg, ${primary}, ${secondary}, ${primary})` }} />
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-          <div className="flex items-center gap-2 mb-6">
-            <Link href="/teams" className="font-mono text-[10px] tracking-wider uppercase transition-colors"
+        {/* Large radial glow behind flag */}
+        <div className="absolute top-0 left-0 w-[600px] h-[400px] pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse at 25% 50%, ${primary}30 0%, transparent 65%)`,
+          }} />
+
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-10">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 mb-8">
+            <Link href="/teams"
+              className="font-mono text-[10px] tracking-wider uppercase transition-colors hover:opacity-80"
               style={{ color: 'var(--cream-muted)' }}>
               ← All Teams
             </Link>
@@ -66,34 +84,49 @@ export default async function TeamPage({ params }: PageProps) {
             </span>
           </div>
 
-          <div className="flex flex-col md:flex-row md:items-center gap-6">
-            <div className="w-24 h-24 rounded-2xl flex items-center justify-center text-5xl shrink-0"
-              style={{
-                background: `${primary}18`,
-                border: `2px solid ${primary}55`,
-                boxShadow: `0 0 40px ${primary}22`,
-              }}>
-              {team.flag}
+          <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-10">
+            {/* LARGE FLAG */}
+            <div className="relative shrink-0">
+              <div
+                className="w-36 h-36 rounded-3xl flex items-center justify-center"
+                style={{
+                  fontSize: '5.5rem',
+                  background: `radial-gradient(circle, ${primary}35 0%, ${primary}10 60%, transparent 100%)`,
+                  border: `2px solid ${primary}55`,
+                  boxShadow: `0 0 60px ${primary}40, 0 0 120px ${primary}18, 0 8px 32px rgba(0,0,0,0.5)`,
+                }}>
+                {team.flag}
+              </div>
+              {/* Confederation badge overlaid */}
+              <div className="absolute -bottom-2 -right-2">
+                <Badge label={team.confederation} variant={CONF_VARIANT[team.confederation] ?? 'gray'} />
+              </div>
             </div>
 
+            {/* Name + info */}
             <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-2">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
                 <Badge label={`Group ${team.group}`} variant="sky" />
-                <Badge label={team.confederation} variant={CONF_VARIANT[team.confederation] ?? 'gray'} />
                 {team.bestFinish.includes('Champions') && <Badge label="🏆 Champions" variant="gold" dot />}
               </div>
-              <h1 className="font-black text-3xl md:text-4xl mb-1" style={{ color: 'var(--cream)' }}>
+              <h1 className="font-black text-4xl md:text-5xl mb-2 leading-none tracking-tight"
+                style={{ color: 'var(--cream)' }}>
                 {team.name}
               </h1>
               <p className="font-mono text-[11px] tracking-wider" style={{ color: 'var(--cream-muted)' }}>
-                {team.confederation} · FIFA Rank #{team.fifaRanking} · {team.worldCupAppearances} World Cup appearances
+                {team.worldCupAppearances} World Cup appearances · Best: {team.bestFinish}
               </p>
             </div>
 
-            <div className="flex items-center gap-4 shrink-0">
-              <div className="text-center">
-                <p className="font-mono font-black text-4xl" style={{ color: primary }}>#{team.fifaRanking}</p>
-                <p className="font-mono text-[9px] tracking-wider uppercase" style={{ color: 'var(--cream-muted)' }}>FIFA Rank</p>
+            {/* Rank + Follow */}
+            <div className="flex flex-row md:flex-col items-center md:items-end gap-4 md:gap-2 shrink-0">
+              <div className="text-right">
+                <p className="font-mono font-black text-5xl leading-none" style={{ color: primary, textShadow: `0 0 30px ${primary}66` }}>
+                  #{team.fifaRanking}
+                </p>
+                <p className="font-mono text-[9px] tracking-[0.18em] uppercase mt-0.5" style={{ color: 'var(--cream-muted)' }}>
+                  FIFA Rank
+                </p>
               </div>
               <FollowButton team={team} size="md" />
             </div>
@@ -102,7 +135,7 @@ export default async function TeamPage({ params }: PageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 md:px-6 space-y-10 pt-8">
-        {/* Stats strip */}
+        {/* ── STATS STRIP ── */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {[
             { label: 'Head Coach',  value: team.coach },
@@ -110,15 +143,17 @@ export default async function TeamPage({ params }: PageProps) {
             { label: 'Star Player', value: team.starPlayer },
             { label: 'Best Finish', value: team.bestFinish },
           ].map(({ label, value }) => (
-            <div key={label} className="card p-4">
+            <div key={label} className="card p-4"
+              style={{ borderLeft: `2px solid ${primary}55` }}>
               <p className="font-mono text-[9px] tracking-[0.15em] uppercase mb-1" style={{ color: 'var(--cream-muted)' }}>{label}</p>
               <p className="font-bold text-sm leading-snug" style={{ color: 'var(--cream)' }}>{value}</p>
             </div>
           ))}
         </div>
 
-        {/* Bio + team identity */}
+        {/* ── BIO + GROUP PATH ── */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Bio */}
           <div className="lg:col-span-2 card p-5">
             <p className="font-mono text-[9px] tracking-[0.2em] uppercase mb-3" style={{ color: 'var(--cream-muted)' }}>
               About {team.name}
@@ -127,45 +162,63 @@ export default async function TeamPage({ params }: PageProps) {
             <div className="flex flex-wrap gap-2 mt-4">
               {team.keyPlayers.map(p => (
                 <span key={p} className="text-[11px] px-2.5 py-1 rounded-lg font-medium"
-                  style={{ background: 'var(--navy-elevated)', border: '1px solid var(--border)', color: 'var(--cream-dim)' }}>
+                  style={{ background: `${primary}18`, border: `1px solid ${primary}33`, color: 'var(--cream-dim)' }}>
                   {p}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="card p-5 space-y-4">
-            <p className="font-mono text-[9px] tracking-[0.2em] uppercase" style={{ color: 'var(--cream-muted)' }}>
-              Team Identity
+          {/* Group Stage Path */}
+          <div className="card p-5">
+            <p className="font-mono text-[9px] tracking-[0.2em] uppercase mb-4" style={{ color: 'var(--cream-muted)' }}>
+              Group {team.group} · Tournament Path
             </p>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg border" style={{ background: primary, borderColor: `${primary}66` }} />
-              <div>
-                <p className="font-mono text-[9px] uppercase" style={{ color: 'var(--cream-muted)' }}>Primary</p>
-                <p className="font-mono text-[11px] font-bold" style={{ color: 'var(--cream)' }}>{primary}</p>
+            {groupOpponents.length > 0 ? (
+              <div className="space-y-3">
+                {groupOpponents.map(({ match, opponent }) => (
+                  <div key={match.id} className="flex items-center gap-3 py-2 rounded-lg px-2 transition-colors hover:bg-white/[0.03]"
+                    style={{ borderBottom: '1px solid var(--border)' }}>
+                    <span className="text-2xl shrink-0">{opponent?.flag ?? '🏴'}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-[12px] truncate" style={{ color: 'var(--cream)' }}>
+                        {opponent?.name ?? 'TBD'}
+                      </p>
+                      <p className="font-mono text-[9px]" style={{ color: 'var(--cream-muted)' }}>
+                        {formatMatchDate(match.date)} · {formatMatchTime(match.date)}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="font-mono text-[10px]" style={{ color: 'var(--cream-dim)' }}>
+                        {COUNTRY_FLAG[match.stadium.country] ?? ''} {match.stadium.city}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg border" style={{ background: secondary, borderColor: `${secondary}66` }} />
-              <div>
-                <p className="font-mono text-[9px] uppercase" style={{ color: 'var(--cream-muted)' }}>Secondary</p>
-                <p className="font-mono text-[11px] font-bold" style={{ color: 'var(--cream)' }}>{secondary}</p>
+            ) : (
+              <div className="space-y-3">
+                {/* Placeholder rows if no match data */}
+                <div className="flex items-center gap-3 py-2 px-2 rounded-lg"
+                  style={{ background: 'var(--navy-elevated)', border: '1px dashed var(--border)' }}>
+                  <span className="font-mono text-[10px]" style={{ color: 'var(--cream-muted)' }}>
+                    Group stage fixtures TBD
+                  </span>
+                </div>
               </div>
-            </div>
-            <div className="pt-3 border-t space-y-2" style={{ borderColor: 'var(--border)' }}>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px]" style={{ color: 'var(--cream-muted)' }}>WC Appearances</span>
-                <span className="font-mono font-black text-xl" style={{ color: primary }}>{team.worldCupAppearances}</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[10px]" style={{ color: 'var(--cream-muted)' }}>Group</span>
-                <span className="font-mono font-black text-xl" style={{ color: 'var(--sky)' }}>Group {team.group}</span>
-              </div>
+            )}
+            {/* WC Appearances footer */}
+            <div className="mt-4 pt-3 flex items-center justify-between"
+              style={{ borderTop: '1px solid var(--border)' }}>
+              <span className="font-mono text-[10px]" style={{ color: 'var(--cream-muted)' }}>WC Appearances</span>
+              <span className="font-mono font-black text-2xl" style={{ color: primary, textShadow: `0 0 20px ${primary}44` }}>
+                {team.worldCupAppearances}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Squad */}
+        {/* ── SQUAD ── */}
         <section>
           <SectionHeader
             title={`${team.name} Squad`}
@@ -186,7 +239,7 @@ export default async function TeamPage({ params }: PageProps) {
           )}
         </section>
 
-        {/* Fixtures */}
+        {/* ── FIXTURES ── */}
         {teamMatches.length > 0 && (
           <section>
             <SectionHeader title="Group Stage Fixtures" accent={`${teamMatches.length} Matches`} />
