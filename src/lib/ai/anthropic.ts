@@ -28,8 +28,8 @@ function buildContext(data: Awaited<ReturnType<typeof getAppData>>): string {
 Tournament: FIFA World Cup 2026
 Hosts: USA, Canada, Mexico
 Format: 48 teams, 104 matches, 16 stadiums
-Opening match: Mexico vs Canada at Estadio Azteca on June 11, 2026
-Final: August 2, 2026 at MetLife Stadium, New York/New Jersey
+Opening match: Mexico vs South Africa at Estadio Azteca on June 11, 2026
+Final: July 19, 2026 at MetLife Stadium, New York/New Jersey
 
 === UPCOMING MATCHES (next 20) ===
 ${upcomingMatches}
