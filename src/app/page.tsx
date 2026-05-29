@@ -1,65 +1,102 @@
-import Image from "next/image";
+import type { Metadata } from 'next';
+import CountdownHero from '@/components/dashboard/CountdownHero';
+import QuickStats from '@/components/dashboard/QuickStats';
+import FeaturedStadium from '@/components/dashboard/FeaturedStadium';
+import MatchCard from '@/components/matches/MatchCard';
+import NewsCard from '@/components/news/NewsCard';
+import AskBar from '@/components/ai/AskBar';
+import SectionHeader from '@/components/ui/SectionHeader';
+import Link from 'next/link';
+import { getUpcomingMatches, getFeaturedNews } from '@/lib/data/adapters';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'World Cup HQ — FIFA World Cup 2026 Dashboard',
+};
+
+export default async function HomePage() {
+  const [upcomingMatches, featuredNews] = await Promise.all([
+    getUpcomingMatches(6),
+    getFeaturedNews(4),
+  ]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="p-4 md:p-6 space-y-8 max-w-7xl mx-auto">
+      {/* Countdown Hero */}
+      <CountdownHero />
+
+      {/* Quick Stats */}
+      <section>
+        <SectionHeader
+          title="Tournament at a Glance"
+          accent="Overview"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+        <QuickStats />
+      </section>
+
+      {/* Upcoming Matches */}
+      <section>
+        <SectionHeader
+          title="Upcoming Matches"
+          accent="Schedule"
+          action={
+            <Link
+              href="/matches"
+              className="text-xs text-[#00ff88] hover:text-white font-mono border border-[#00ff88]/30 px-3 py-1.5 rounded hover:bg-[#00ff88]/10 transition-all whitespace-nowrap"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              View all →
+            </Link>
+          }
+        />
+        {upcomingMatches.length === 0 ? (
+          <div className="retro-card p-8 text-center">
+            <p className="text-[#8888bb] text-sm">
+              Group stage matches begin June 11, 2026. Check back closer to the tournament.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            {upcomingMatches.map(match => (
+              <MatchCard key={match.id} match={match} />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Two-col: News + Ask AI */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* News */}
+        <section className="lg:col-span-2">
+          <SectionHeader
+            title="Latest News"
+            accent="News"
+            action={
+              <Link
+                href="/news"
+                className="text-xs text-[#00ff88] hover:text-white font-mono border border-[#00ff88]/30 px-3 py-1.5 rounded hover:bg-[#00ff88]/10 transition-all whitespace-nowrap"
+              >
+                View all →
+              </Link>
+            }
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {featuredNews.map(item => (
+              <NewsCard key={item.id} item={item} featured />
+            ))}
+          </div>
+        </section>
+
+        {/* Sidebar: AI + Stadium */}
+        <aside className="space-y-6">
+          <section>
+            <SectionHeader title="Ask AI" accent="Powered by Claude" />
+            <AskBar />
+          </section>
+          <section>
+            <SectionHeader title="Final Venue" accent="Featured Stadium" />
+            <FeaturedStadium />
+          </section>
+        </aside>
+      </div>
     </div>
   );
 }
