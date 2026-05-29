@@ -1,31 +1,31 @@
 import { cn } from '@/lib/utils';
 
+type Accent = 'gold' | 'green' | 'red' | 'sky' | 'cream';
+
+const ACCENT: Record<Accent, string> = {
+  gold:  'var(--gold-bright)',
+  green: 'var(--green-bright)',
+  red:   'var(--red-bright)',
+  sky:   'var(--sky)',
+  cream: 'var(--cream)',
+};
+
 interface StatCardProps {
   label: string;
   value: string | number;
   subLabel?: string;
   icon?: string;
-  accent?: 'green' | 'pink' | 'blue' | 'yellow' | 'gold';
+  accent?: Accent;
   className?: string;
 }
 
-const ACCENT_CLASSES: Record<string, string> = {
-  green:  'text-[#00ff88]',
-  pink:   'text-[#ff0080]',
-  blue:   'text-[#00d4ff]',
-  yellow: 'text-[#ffe600]',
-  gold:   'text-[#ffd700]',
-};
-
-export default function StatCard({
-  label, value, subLabel, icon, accent = 'green', className,
-}: StatCardProps) {
+export default function StatCard({ label, value, subLabel, icon, accent = 'gold', className }: StatCardProps) {
   return (
-    <div className={cn('retro-card p-4', className)}>
-      {icon && <span className="text-2xl mb-2 block">{icon}</span>}
-      <p className="text-[10px] font-mono text-[#444466] tracking-wider uppercase mb-1">{label}</p>
-      <p className={cn('text-3xl font-bold font-mono', ACCENT_CLASSES[accent])}>{value}</p>
-      {subLabel && <p className="text-xs text-[#8888bb] mt-1">{subLabel}</p>}
+    <div className={cn('card p-4', className)}>
+      {icon && <span className="text-2xl mb-3 block">{icon}</span>}
+      <p className="font-mono text-[10px] tracking-[0.18em] uppercase mb-1" style={{ color: 'var(--cream-muted)' }}>{label}</p>
+      <p className="font-mono font-black text-3xl" style={{ color: ACCENT[accent] }}>{value}</p>
+      {subLabel && <p className="text-xs mt-1.5 font-medium" style={{ color: 'var(--cream-muted)' }}>{subLabel}</p>}
     </div>
   );
 }

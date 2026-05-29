@@ -3,97 +3,96 @@
 import { useState, useEffect } from 'react';
 import { getCountdownParts } from '@/lib/utils';
 
-// Opening match: June 11, 2026 at Estadio Azteca
 const TOURNAMENT_START = '2026-06-11T20:00:00-06:00';
 
-function CountdownUnit({ value, label }: { value: number; label: string }) {
+function Unit({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex flex-col items-center">
-      <div className="relative">
-        <div className="w-16 sm:w-20 h-16 sm:h-20 bg-[#0d0d1e] border border-[#1e1e3a] rounded-lg flex items-center justify-center overflow-hidden">
-          {/* Top half shine */}
-          <div className="absolute top-0 inset-x-0 h-1/2 bg-gradient-to-b from-[#ffffff08] to-transparent" />
-          {/* Center line */}
-          <div className="absolute inset-x-0 top-1/2 h-px bg-[#050510]" />
-          <span className="font-score text-2xl sm:text-3xl font-bold text-[#00ff88] relative z-10">
-            {String(value).padStart(2, '0')}
-          </span>
-        </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="relative w-16 sm:w-20 h-16 sm:h-20 rounded-xl overflow-hidden flex items-center justify-center"
+        style={{ background: 'var(--navy-elevated)', border: '1px solid var(--border-gold)', boxShadow: '0 0 20px var(--gold-glow), inset 0 1px 0 rgba(212,168,67,0.15)' }}>
+        {/* flip line */}
+        <div className="absolute inset-x-0 top-1/2 h-px" style={{ background: 'var(--navy)' }} />
+        <span className="font-score text-2xl sm:text-3xl font-black relative z-10" style={{ color: 'var(--gold-bright)' }}>
+          {String(value).padStart(2, '0')}
+        </span>
       </div>
-      <span className="text-[9px] font-mono text-[#444466] tracking-[0.2em] uppercase mt-2">
-        {label}
-      </span>
+      <span className="font-mono text-[9px] tracking-[0.2em] uppercase" style={{ color: 'var(--cream-muted)' }}>{label}</span>
     </div>
   );
+}
+
+function Sep() {
+  return <span className="text-2xl font-black mb-6" style={{ color: 'var(--border-mid)' }}>:</span>;
 }
 
 export default function CountdownHero() {
   const [parts, setParts] = useState(getCountdownParts(TOURNAMENT_START));
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setParts(getCountdownParts(TOURNAMENT_START));
-    }, 1000);
+    const id = setInterval(() => setParts(getCountdownParts(TOURNAMENT_START)), 1000);
     return () => clearInterval(id);
   }, []);
 
   return (
-    <div className="relative overflow-hidden rounded-xl border border-[#1e1e3a] bg-[#0d0d1e]">
-      {/* Background grid */}
-      <div className="absolute inset-0 bg-grid opacity-30" />
+    <div className="relative overflow-hidden rounded-2xl"
+      style={{ background: 'var(--navy-card)', border: '1px solid var(--border-gold)', boxShadow: '0 0 40px var(--gold-glow)' }}>
+      {/* Grid bg */}
+      <div className="absolute inset-0 bg-grid opacity-20" />
+      {/* Pitch glow */}
+      <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 70% 50% at 50% 110%, rgba(46,158,91,0.08) 0%, transparent 70%)' }} />
+      {/* Gold top edge */}
+      <div className="absolute top-0 inset-x-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, var(--gold), transparent)' }} />
 
-      {/* Neon glow accents */}
-      <div className="absolute -top-20 left-1/4 w-60 h-60 bg-[#00ff88]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-20 right-1/4 w-60 h-60 bg-[#00d4ff]/5 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 p-6 md:p-10 text-center">
-        {/* Label */}
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#050510] border border-[#1e1e3a] mb-6">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] animate-pulse-neon" />
-          <span className="text-[10px] font-mono text-[#8888bb] tracking-[0.2em] uppercase">
-            Countdown to Kickoff
+      <div className="relative z-10 px-6 py-8 md:py-12 text-center">
+        {/* Pre-label */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-6"
+          style={{ background: 'var(--navy-elevated)', border: '1px solid var(--border-mid)' }}>
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse-slow" style={{ background: 'var(--green)' }} />
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase" style={{ color: 'var(--cream-dim)' }}>
+            Countdown to Kickoff · Azteca, Mexico City
           </span>
         </div>
 
-        {/* Title */}
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-2 leading-tight">
-          <span className="gradient-text">FIFA World Cup</span>
+        {/* Headline */}
+        <h1 className="font-black text-4xl sm:text-5xl md:text-7xl leading-none tracking-tighter mb-2">
+          <span className="text-cream-gradient">FIFA World Cup</span>
         </h1>
-        <p className="text-[#00ff88] font-mono text-xl sm:text-2xl font-bold tracking-widest mb-2">
-          2026
-        </p>
-        <p className="text-[#8888bb] text-sm mb-8">
-          🇺🇸 USA &bull; 🇲🇽 Mexico &bull; 🇨🇦 Canada &nbsp;·&nbsp; June 11 – August 2
+        <div className="font-mono font-black text-2xl sm:text-3xl tracking-[0.15em] mb-1"
+          style={{ color: 'var(--gold)' }}>2026</div>
+        <p className="text-sm font-medium mb-8" style={{ color: 'var(--cream-muted)' }}>
+          🇺🇸 United States &nbsp;·&nbsp; 🇲🇽 Mexico &nbsp;·&nbsp; 🇨🇦 Canada
         </p>
 
         {/* Countdown */}
         {parts.expired ? (
-          <p className="text-xl font-bold text-[#00ff88] font-mono glow-green">
-            THE TOURNAMENT IS LIVE!
+          <p className="text-2xl font-black tracking-wide" style={{ color: 'var(--gold-bright)' }}>
+            🏆 THE TOURNAMENT IS LIVE!
           </p>
         ) : (
-          <div className="flex items-end justify-center gap-3 sm:gap-6">
-            <CountdownUnit value={parts.days} label="Days" />
-            <span className="text-2xl text-[#1e1e3a] font-mono mb-8 font-bold">:</span>
-            <CountdownUnit value={parts.hours} label="Hours" />
-            <span className="text-2xl text-[#1e1e3a] font-mono mb-8 font-bold">:</span>
-            <CountdownUnit value={parts.minutes} label="Minutes" />
-            <span className="text-2xl text-[#1e1e3a] font-mono mb-8 font-bold">:</span>
-            <CountdownUnit value={parts.seconds} label="Seconds" />
+          <div className="flex items-end justify-center gap-2 sm:gap-4">
+            <Unit value={parts.days}    label="Days" />
+            <Sep />
+            <Unit value={parts.hours}   label="Hours" />
+            <Sep />
+            <Unit value={parts.minutes} label="Min" />
+            <Sep />
+            <Unit value={parts.seconds} label="Sec" />
           </div>
         )}
 
-        {/* Sub-info */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+        {/* Tournament facts */}
+        <div className="flex flex-wrap justify-center gap-6 mt-8 pt-6"
+          style={{ borderTop: '1px solid var(--border)' }}>
           {[
-            { value: '48', label: 'Teams' },
-            { value: '104', label: 'Matches' },
-            { value: '16', label: 'Stadiums' },
-            { value: '3', label: 'Nations' },
-          ].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="text-lg font-bold font-mono text-white">{value}</p>
-              <p className="text-[10px] font-mono text-[#444466] tracking-wider uppercase">{label}</p>
+            { v: '48',   l: 'Teams' },
+            { v: '104',  l: 'Matches' },
+            { v: '16',   l: 'Stadiums' },
+            { v: '3',    l: 'Nations' },
+            { v: '53',   l: 'Days' },
+          ].map(({ v, l }) => (
+            <div key={l} className="text-center">
+              <p className="font-mono font-black text-xl" style={{ color: 'var(--gold-bright)' }}>{v}</p>
+              <p className="font-mono text-[10px] tracking-[0.15em] uppercase" style={{ color: 'var(--cream-muted)' }}>{l}</p>
             </div>
           ))}
         </div>

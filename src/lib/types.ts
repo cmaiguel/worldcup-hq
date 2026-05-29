@@ -14,14 +14,19 @@ export type Confederation = 'UEFA' | 'CONMEBOL' | 'CONCACAF' | 'AFC' | 'CAF' | '
 export interface Team {
   id: string;
   name: string;
-  code: string; // 3-letter code e.g. ARG
-  flag: string; // emoji flag
+  code: string;
+  flag: string;
   confederation: Confederation;
   fifaRanking: number;
-  group: string; // 'A'-'L'
+  group: string;
   colors: { primary: string; secondary: string };
   coach: string;
+  captain: string;
+  starPlayer: string;
   keyPlayers: string[];
+  worldCupAppearances: number;
+  bestFinish: string;
+  bio: string;
 }
 
 export interface Stadium {
@@ -43,11 +48,11 @@ export interface Match {
   stage: Stage;
   group?: string;
   matchNumber: number;
-  homeTeam: Team | null; // null = TBD
+  homeTeam: Team | null;
   awayTeam: Team | null;
   homeScore?: number;
   awayScore?: number;
-  date: string; // ISO string
+  date: string;
   stadiumId: string;
   status: MatchStatus;
   attendance?: number;
@@ -93,10 +98,12 @@ export interface NewsItem {
   excerpt: string;
   category: NewsCategory;
   source: string;
-  publishedAt: string; // ISO string
+  sourceUrl?: string;
+  publishedAt: string;
   imageUrl?: string;
   featured: boolean;
   tags: string[];
+  readTime: number;
 }
 
 export type NewsCategory =

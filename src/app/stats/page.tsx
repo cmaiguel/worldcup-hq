@@ -10,63 +10,60 @@ export const metadata: Metadata = { title: 'Statistics' };
 const GROUPS = 'ABCDEFGHIJKL'.split('');
 
 export default async function StatsPage() {
-  const [players, teamStats] = await Promise.all([
-    getPlayerStats(),
-    getTeamStats(),
-  ]);
-
-  const totalGoals = players.reduce((sum, p) => sum + p.goals, 0);
-  const totalMatches = 0; // Pre-tournament
+  const [players, teamStats] = await Promise.all([getPlayerStats(), getTeamStats()]);
+  const totalGoals = players.reduce((s, p) => s + p.goals, 0);
 
   return (
-    <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-8">
-      <SectionHeader
-        title="Tournament Statistics"
-        subtitle="Live stats once matches begin on June 11, 2026"
-        accent="Stats"
-      />
+    <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-10 pb-24">
+      <SectionHeader title="Tournament Statistics" accent="Live Stats"
+        subtitle="Updated in real-time from June 11, 2026" />
 
-      {/* Top-level stats */}
+      {/* Top stats row */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <StatCard label="Goals Scored" value={totalGoals} icon="⚽" accent="green" subLabel="Pre-tournament" />
-        <StatCard label="Matches Played" value={totalMatches} icon="📅" accent="blue" subLabel="of 104 total" />
-        <StatCard label="Red Cards" value={0} icon="🟥" accent="pink" subLabel="Pre-tournament" />
-        <StatCard label="Goals/Match" value="—" icon="📊" accent="yellow" subLabel="No data yet" />
+        <StatCard label="Goals Scored"    value={totalGoals} icon="⚽" accent="gold"  subLabel="Tournament total" />
+        <StatCard label="Matches Played"  value={0}          icon="📅" accent="sky"   subLabel="of 104 total" />
+        <StatCard label="Red Cards"       value={0}          icon="🟥" accent="red"   subLabel="Tournament total" />
+        <StatCard label="Goals / Match"   value="—"          icon="📊" accent="green" subLabel="Avg per game" />
       </div>
 
+      {/* Tournament leaders + top scorers */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Top Scorers */}
         <section>
-          <SectionHeader title="Top Scorers" accent="Golden Boot Race" />
-          <div className="retro-card overflow-hidden">
-            <div className="px-4 py-2.5 bg-[#141430] border-b border-[#1e1e3a] flex items-center justify-between">
-              <span className="text-xs font-bold font-mono text-white">PLAYER</span>
-              <span className="text-[10px] text-[#444466] font-mono">GOALS · AST</span>
+          <SectionHeader title="Golden Boot Race" accent="Top Scorers" />
+          <div className="card overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-2.5"
+              style={{ background: 'var(--navy-elevated)', borderBottom: '1px solid var(--border)' }}>
+              <span className="font-mono font-black text-[11px]" style={{ color: 'var(--gold-bright)' }}>⚽ GOLDEN BOOT STANDINGS</span>
+              <span className="font-mono text-[9px]" style={{ color: 'var(--cream-muted)' }}>G · A</span>
             </div>
-            <div className="p-2">
-              <TopScorers players={players} limit={10} />
-            </div>
+            <TopScorers players={players} limit={10} />
           </div>
         </section>
 
-        {/* Group Tables */}
         <section>
-          <SectionHeader title="Group Standings" accent="Group Stage" />
+          <SectionHeader title="Group A – D Standings" accent="Group Stage" />
           <div className="space-y-3">
-            {GROUPS.slice(0, 4).map(g => (
-              <GroupTable key={g} stats={teamStats} group={g} />
-            ))}
+            {GROUPS.slice(0, 4).map(g => <GroupTable key={g} stats={teamStats} group={g} />)}
           </div>
         </section>
       </div>
 
-      {/* All Group Tables */}
+      {/* All 12 group tables */}
       <section>
-        <SectionHeader title="All Groups" accent="Full Standings" />
+        <SectionHeader title="All 12 Groups" accent="Full Standings" />
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-          {GROUPS.map(g => (
-            <GroupTable key={g} stats={teamStats} group={g} />
-          ))}
+          {GROUPS.map(g => <GroupTable key={g} stats={teamStats} group={g} />)}
+        </div>
+      </section>
+
+      {/* Cards discipline */}
+      <section>
+        <SectionHeader title="Disciplinary" accent="Cards" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+          <StatCard label="Yellow Cards"  value={0} icon="🟨" accent="gold"  />
+          <StatCard label="Red Cards"     value={0} icon="🟥" accent="red"   />
+          <StatCard label="Suspensions"   value={0} icon="⛔" accent="cream" />
+          <StatCard label="Clean Sheets"  value={0} icon="🧤" accent="green" />
         </div>
       </section>
     </div>
