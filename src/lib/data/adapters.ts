@@ -4,10 +4,10 @@
  */
 
 import {
-  TEAMS, STADIUMS, MATCHES, PLAYER_STATS, TEAM_STATS, NEWS,
+  TEAMS, STADIUMS, MATCHES, PLAYER_STATS, TEAM_STATS, NEWS, PLAYERS,
 } from './seed';
 import type {
-  Team, Stadium, MatchWithStadium, PlayerStat, TeamStat, NewsItem,
+  Team, Stadium, MatchWithStadium, PlayerStat, TeamStat, NewsItem, Player,
   FilterOptions, AppData,
 } from '../types';
 
@@ -22,6 +22,20 @@ export async function getTeams(opts: FilterOptions = {}): Promise<Team[]> {
 
 export async function getTeamById(id: string): Promise<Team | null> {
   return TEAMS.find(t => t.id === id) ?? null;
+}
+
+export async function getTeamBySlug(slug: string): Promise<Team | null> {
+  return TEAMS.find(t => t.code.toLowerCase() === slug.toLowerCase()) ?? null;
+}
+
+// ─── Players ─────────────────────────────────────────────────────────────────
+
+export async function getPlayersByTeam(teamId: string): Promise<Player[]> {
+  return PLAYERS.filter(p => p.teamId === teamId);
+}
+
+export async function getAllPlayers(): Promise<Player[]> {
+  return [...PLAYERS];
 }
 
 // ─── Stadiums ────────────────────────────────────────────────────────────────
@@ -107,13 +121,14 @@ export async function getFeaturedNews(limit = 4): Promise<NewsItem[]> {
 // ─── Aggregate ───────────────────────────────────────────────────────────────
 
 export async function getAppData(): Promise<AppData> {
-  const [teams, stadiums, matches, playerStats, teamStats, news] = await Promise.all([
+  const [teams, stadiums, matches, playerStats, teamStats, news, players] = await Promise.all([
     getTeams(),
     getStadiums(),
     getMatches(),
     getPlayerStats(),
     getTeamStats(),
     getNews(),
+    getAllPlayers(),
   ]);
-  return { teams, stadiums, matches, playerStats, teamStats, news };
+  return { teams, stadiums, matches, playerStats, teamStats, news, players };
 }

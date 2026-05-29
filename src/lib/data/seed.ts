@@ -1,4 +1,4 @@
-import type { Team, Stadium, PlayerStat, TeamStat, NewsItem, MatchWithStadium } from '../types';
+import type { Team, Stadium, PlayerStat, TeamStat, NewsItem, MatchWithStadium, Player } from '../types';
 
 // ─── STADIUMS ────────────────────────────────────────────────────────────────
 
@@ -532,6 +532,118 @@ export const PLAYER_STATS: PlayerStat[] = [
   { id:'ps020', name:'Julián Álvarez',     teamId:'arg', teamCode:'ARG', teamFlag:'🇦🇷', position:'Forward',   goals:0, assists:0, yellowCards:0, redCards:0, appearances:0, minutesPlayed:0 },
 ];
 
+// ─── PLAYERS ──────────────────────────────────────────────────────────────────
+
+export const PLAYERS: Player[] = [
+  // ARGENTINA
+  { id:'p_arg_1', name:'Lionel Messi',       age:38, position:'CAM', shirtNumber:10, club:'Inter Miami CF',      teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€35M',  isCaptain:true, isStarPlayer:true },
+  { id:'p_arg_2', name:'Julián Álvarez',      age:24, position:'ST',  shirtNumber:9,  club:'Atlético Madrid',    teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€90M'  },
+  { id:'p_arg_3', name:'Enzo Fernández',      age:24, position:'CM',  shirtNumber:24, club:'Chelsea',            teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€85M'  },
+  { id:'p_arg_4', name:'Rodrigo De Paul',     age:30, position:'CM',  shirtNumber:7,  club:'Atlético Madrid',    teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€45M'  },
+  { id:'p_arg_5', name:'Cristian Romero',     age:26, position:'CB',  shirtNumber:13, club:'Tottenham Hotspur',  teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€60M'  },
+  { id:'p_arg_6', name:'Alexis Mac Allister', age:25, position:'CM',  shirtNumber:20, club:'Liverpool',          teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€70M'  },
+  { id:'p_arg_7', name:'Nahuel Molina',       age:26, position:'RB',  shirtNumber:26, club:'Atlético Madrid',    teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€35M'  },
+  { id:'p_arg_8', name:'Emiliano Martínez',   age:32, position:'GK',  shirtNumber:23, club:'Aston Villa',        teamId:'arg', goals:0, assists:0, appearances:0, marketValue:'€35M'  },
+  // BRAZIL
+  { id:'p_bra_1', name:'Vinícius Jr.',        age:24, position:'LW',  shirtNumber:10, club:'Real Madrid',        teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€180M', isStarPlayer:true },
+  { id:'p_bra_2', name:'Rodrygo',             age:23, position:'RW',  shirtNumber:11, club:'Real Madrid',        teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€90M'  },
+  { id:'p_bra_3', name:'Marquinhos',          age:30, position:'CB',  shirtNumber:5,  club:'PSG',                teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€40M',  isCaptain:true },
+  { id:'p_bra_4', name:'Casemiro',            age:33, position:'CDM', shirtNumber:5,  club:'Manchester United',  teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€25M'  },
+  { id:'p_bra_5', name:'Bruno Guimarães',     age:26, position:'CM',  shirtNumber:16, club:'Newcastle United',   teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€80M'  },
+  { id:'p_bra_6', name:'Alisson Becker',      age:31, position:'GK',  shirtNumber:1,  club:'Liverpool',          teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€40M'  },
+  { id:'p_bra_7', name:'Endrick',             age:18, position:'ST',  shirtNumber:9,  club:'Real Madrid',        teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€45M'  },
+  { id:'p_bra_8', name:'Éder Militão',        age:26, position:'CB',  shirtNumber:4,  club:'Real Madrid',        teamId:'bra', goals:0, assists:0, appearances:0, marketValue:'€70M'  },
+  // FRANCE
+  { id:'p_fra_1', name:'Kylian Mbappé',       age:27, position:'ST',  shirtNumber:10, club:'Real Madrid',        teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€180M', isCaptain:true, isStarPlayer:true },
+  { id:'p_fra_2', name:'Antoine Griezmann',   age:35, position:'CAM', shirtNumber:7,  club:'Atlético Madrid',    teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€25M'  },
+  { id:'p_fra_3', name:'Aurélien Tchouaméni', age:24, position:'CDM', shirtNumber:8,  club:'Real Madrid',        teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€80M'  },
+  { id:'p_fra_4', name:'Eduardo Camavinga',   age:22, position:'CM',  shirtNumber:14, club:'Real Madrid',        teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€80M'  },
+  { id:'p_fra_5', name:'Mike Maignan',        age:28, position:'GK',  shirtNumber:16, club:'AC Milan',           teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€45M'  },
+  { id:'p_fra_6', name:'William Saliba',      age:23, position:'CB',  shirtNumber:17, club:'Arsenal',            teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€70M'  },
+  { id:'p_fra_7', name:'Ousmane Dembélé',     age:28, position:'RW',  shirtNumber:11, club:'PSG',                teamId:'fra', goals:0, assists:0, appearances:0, marketValue:'€60M'  },
+  // ENGLAND
+  { id:'p_eng_1', name:'Harry Kane',          age:31, position:'ST',  shirtNumber:9,  club:'Bayern Munich',      teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€70M',  isCaptain:true },
+  { id:'p_eng_2', name:'Jude Bellingham',     age:21, position:'CAM', shirtNumber:22, club:'Real Madrid',        teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€180M', isStarPlayer:true },
+  { id:'p_eng_3', name:'Phil Foden',          age:25, position:'LW',  shirtNumber:47, club:'Manchester City',    teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€150M' },
+  { id:'p_eng_4', name:'Bukayo Saka',         age:23, position:'RW',  shirtNumber:7,  club:'Arsenal',            teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€160M' },
+  { id:'p_eng_5', name:'Declan Rice',         age:25, position:'CDM', shirtNumber:4,  club:'Arsenal',            teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€100M' },
+  { id:'p_eng_6', name:'Jordan Pickford',     age:31, position:'GK',  shirtNumber:1,  club:'Everton',            teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€20M'  },
+  { id:'p_eng_7', name:'John Stones',         age:31, position:'CB',  shirtNumber:5,  club:'Manchester City',    teamId:'eng', goals:0, assists:0, appearances:0, marketValue:'€35M'  },
+  // SPAIN
+  { id:'p_esp_1', name:'Lamine Yamal',        age:18, position:'RW',  shirtNumber:19, club:'FC Barcelona',       teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€180M', isStarPlayer:true },
+  { id:'p_esp_2', name:'Pedri',               age:23, position:'CM',  shirtNumber:8,  club:'FC Barcelona',       teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€120M' },
+  { id:'p_esp_3', name:'Álvaro Morata',       age:33, position:'ST',  shirtNumber:7,  club:'Atlético Madrid',    teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€25M',  isCaptain:true },
+  { id:'p_esp_4', name:'Rodri',               age:28, position:'CDM', shirtNumber:16, club:'Manchester City',    teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€120M' },
+  { id:'p_esp_5', name:'Gavi',                age:20, position:'CM',  shirtNumber:6,  club:'FC Barcelona',       teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€100M' },
+  { id:'p_esp_6', name:'Unai Simón',          age:27, position:'GK',  shirtNumber:1,  club:'Athletic Club',      teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€30M'  },
+  { id:'p_esp_7', name:'Nico Williams',       age:22, position:'LW',  shirtNumber:17, club:'Athletic Club',      teamId:'esp', goals:0, assists:0, appearances:0, marketValue:'€100M' },
+  // GERMANY
+  { id:'p_ger_1', name:'Florian Wirtz',       age:22, position:'CAM', shirtNumber:10, club:'Bayer Leverkusen',   teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€150M', isStarPlayer:true },
+  { id:'p_ger_2', name:'Jamal Musiala',       age:22, position:'CAM', shirtNumber:14, club:'Bayern Munich',      teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€150M' },
+  { id:'p_ger_3', name:'Kai Havertz',         age:25, position:'ST',  shirtNumber:7,  club:'Arsenal',            teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€75M'  },
+  { id:'p_ger_4', name:'Manuel Neuer',        age:39, position:'GK',  shirtNumber:1,  club:'Bayern Munich',      teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€5M'   },
+  { id:'p_ger_5', name:'Antonio Rüdiger',     age:32, position:'CB',  shirtNumber:16, club:'Real Madrid',        teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€30M'  },
+  { id:'p_ger_6', name:'Ilkay Gündoğan',      age:35, position:'CM',  shirtNumber:21, club:'FC Barcelona',       teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€15M',  isCaptain:true },
+  { id:'p_ger_7', name:'Joshua Kimmich',      age:30, position:'CDM', shirtNumber:6,  club:'Bayern Munich',      teamId:'ger', goals:0, assists:0, appearances:0, marketValue:'€60M'  },
+  // PORTUGAL
+  { id:'p_por_1', name:'Cristiano Ronaldo',   age:41, position:'ST',  shirtNumber:7,  club:'Al Nassr',           teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€5M',   isCaptain:true },
+  { id:'p_por_2', name:'Bruno Fernandes',     age:30, position:'CAM', shirtNumber:8,  club:'Manchester United',  teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€70M',  isStarPlayer:true },
+  { id:'p_por_3', name:'Rafael Leão',         age:25, position:'LW',  shirtNumber:11, club:'AC Milan',           teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€80M'  },
+  { id:'p_por_4', name:'Rúben Dias',          age:27, position:'CB',  shirtNumber:4,  club:'Manchester City',    teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€70M'  },
+  { id:'p_por_5', name:'Vitinha',             age:25, position:'CM',  shirtNumber:17, club:'PSG',                teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€65M'  },
+  { id:'p_por_6', name:'Diogo Costa',         age:25, position:'GK',  shirtNumber:1,  club:'FC Porto',           teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€35M'  },
+  { id:'p_por_7', name:'João Félix',          age:25, position:'CF',  shirtNumber:11, club:'Atlético Madrid',    teamId:'por', goals:0, assists:0, appearances:0, marketValue:'€45M'  },
+  // USA
+  { id:'p_usa_1', name:'Christian Pulisic',   age:27, position:'CAM', shirtNumber:10, club:'AC Milan',           teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€35M',  isStarPlayer:true },
+  { id:'p_usa_2', name:'Gio Reyna',           age:23, position:'CAM', shirtNumber:7,  club:'Borussia Dortmund',  teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€30M'  },
+  { id:'p_usa_3', name:'Tyler Adams',         age:25, position:'CDM', shirtNumber:4,  club:'Bournemouth',        teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€25M',  isCaptain:true },
+  { id:'p_usa_4', name:'Ricardo Pepi',        age:22, position:'ST',  shirtNumber:9,  club:'PSV Eindhoven',      teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€20M'  },
+  { id:'p_usa_5', name:'Matt Turner',         age:30, position:'GK',  shirtNumber:1,  club:'Nottingham Forest',  teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€10M'  },
+  { id:'p_usa_6', name:'Weston McKennie',     age:27, position:'CM',  shirtNumber:8,  club:'Juventus',           teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€22M'  },
+  { id:'p_usa_7', name:'Sergiño Dest',        age:24, position:'RB',  shirtNumber:2,  club:'PSV Eindhoven',      teamId:'usa', goals:0, assists:0, appearances:0, marketValue:'€18M'  },
+  // MEXICO
+  { id:'p_mex_1', name:'Santiago Giménez',    age:24, position:'ST',  shirtNumber:9,  club:'Feyenoord',          teamId:'mex', goals:0, assists:0, appearances:0, marketValue:'€35M',  isStarPlayer:true },
+  { id:'p_mex_2', name:'Hirving Lozano',      age:30, position:'RW',  shirtNumber:22, club:'PSV Eindhoven',      teamId:'mex', goals:0, assists:0, appearances:0, marketValue:'€20M',  isCaptain:true },
+  { id:'p_mex_3', name:'Edson Álvarez',       age:27, position:'CDM', shirtNumber:18, club:'West Ham United',    teamId:'mex', goals:0, assists:0, appearances:0, marketValue:'€30M'  },
+  { id:'p_mex_4', name:'Guillermo Ochoa',     age:40, position:'GK',  shirtNumber:1,  club:'Club América',       teamId:'mex', goals:0, assists:0, appearances:0, marketValue:'€1M'   },
+  { id:'p_mex_5', name:'Raúl Jiménez',        age:33, position:'ST',  shirtNumber:9,  club:'Fulham',             teamId:'mex', goals:0, assists:0, appearances:0, marketValue:'€10M'  },
+  // CANADA
+  { id:'p_can_1', name:'Alphonso Davies',     age:24, position:'LB',  shirtNumber:19, club:'Bayern Munich',      teamId:'can', goals:0, assists:0, appearances:0, marketValue:'€70M',  isCaptain:true, isStarPlayer:true },
+  { id:'p_can_2', name:'Jonathan David',      age:25, position:'ST',  shirtNumber:20, club:'Lille',              teamId:'can', goals:0, assists:0, appearances:0, marketValue:'€60M'  },
+  { id:'p_can_3', name:'Cyle Larin',          age:29, position:'ST',  shirtNumber:9,  club:'Club Brugge',        teamId:'can', goals:0, assists:0, appearances:0, marketValue:'€12M'  },
+  { id:'p_can_4', name:'Stephen Eustaquio',   age:27, position:'CM',  shirtNumber:7,  club:'FC Porto',           teamId:'can', goals:0, assists:0, appearances:0, marketValue:'€20M'  },
+  { id:'p_can_5', name:'Milan Borjan',        age:36, position:'GK',  shirtNumber:18, club:'FK Crvena zvezda',   teamId:'can', goals:0, assists:0, appearances:0, marketValue:'€2M'   },
+  // MOROCCO
+  { id:'p_mar_1', name:'Achraf Hakimi',       age:27, position:'RB',  shirtNumber:2,  club:'PSG',                teamId:'mar', goals:0, assists:0, appearances:0, marketValue:'€70M',  isStarPlayer:true },
+  { id:'p_mar_2', name:'Hakim Ziyech',        age:32, position:'RW',  shirtNumber:7,  club:'Galatasaray',        teamId:'mar', goals:0, assists:0, appearances:0, marketValue:'€10M'  },
+  { id:'p_mar_3', name:'Youssef En-Nesyri',   age:27, position:'ST',  shirtNumber:19, club:'Fenerbahçe',         teamId:'mar', goals:0, assists:0, appearances:0, marketValue:'€25M'  },
+  { id:'p_mar_4', name:'Sofyan Amrabat',      age:28, position:'CDM', shirtNumber:4,  club:'Fiorentina',         teamId:'mar', goals:0, assists:0, appearances:0, marketValue:'€20M'  },
+  { id:'p_mar_5', name:'Romain Saïss',        age:35, position:'CB',  shirtNumber:5,  club:'Besiktas',           teamId:'mar', goals:0, assists:0, appearances:0, marketValue:'€3M',   isCaptain:true },
+  { id:'p_mar_6', name:'Yassine Bono',        age:32, position:'GK',  shirtNumber:1,  club:'Al-Hilal',           teamId:'mar', goals:0, assists:0, appearances:0, marketValue:'€8M'   },
+  // SOUTH KOREA
+  { id:'p_kor_1', name:'Son Heung-min',       age:34, position:'LW',  shirtNumber:7,  club:'Tottenham Hotspur',  teamId:'kor', goals:0, assists:0, appearances:0, marketValue:'€25M',  isCaptain:true, isStarPlayer:true },
+  { id:'p_kor_2', name:'Lee Kang-in',         age:24, position:'CAM', shirtNumber:10, club:'PSG',                teamId:'kor', goals:0, assists:0, appearances:0, marketValue:'€40M'  },
+  { id:'p_kor_3', name:'Hwang Hee-chan',       age:28, position:'ST',  shirtNumber:11, club:'Wolverhampton',      teamId:'kor', goals:0, assists:0, appearances:0, marketValue:'€20M'  },
+  { id:'p_kor_4', name:'Kim Min-jae',         age:28, position:'CB',  shirtNumber:3,  club:'Bayern Munich',      teamId:'kor', goals:0, assists:0, appearances:0, marketValue:'€50M'  },
+  // NETHERLANDS
+  { id:'p_ned_1', name:'Virgil van Dijk',     age:33, position:'CB',  shirtNumber:4,  club:'Liverpool',          teamId:'ned', goals:0, assists:0, appearances:0, marketValue:'€30M',  isCaptain:true },
+  { id:'p_ned_2', name:'Cody Gakpo',          age:25, position:'LW',  shirtNumber:11, club:'Liverpool',          teamId:'ned', goals:0, assists:0, appearances:0, marketValue:'€70M',  isStarPlayer:true },
+  { id:'p_ned_3', name:'Frenkie de Jong',     age:28, position:'CM',  shirtNumber:21, club:'FC Barcelona',       teamId:'ned', goals:0, assists:0, appearances:0, marketValue:'€60M'  },
+  { id:'p_ned_4', name:'Memphis Depay',       age:30, position:'ST',  shirtNumber:10, club:'Atlético Madrid',    teamId:'ned', goals:0, assists:0, appearances:0, marketValue:'€20M'  },
+  { id:'p_ned_5', name:'Denzel Dumfries',     age:28, position:'RB',  shirtNumber:22, club:'Inter Milan',        teamId:'ned', goals:0, assists:0, appearances:0, marketValue:'€35M'  },
+  // ITALY
+  { id:'p_ita_1', name:'Gianluigi Donnarumma',age:26, position:'GK',  shirtNumber:1,  club:'PSG',                teamId:'ita', goals:0, assists:0, appearances:0, marketValue:'€50M',  isCaptain:true },
+  { id:'p_ita_2', name:'Federico Chiesa',     age:27, position:'RW',  shirtNumber:14, club:'Liverpool',          teamId:'ita', goals:0, assists:0, appearances:0, marketValue:'€40M',  isStarPlayer:true },
+  { id:'p_ita_3', name:'Nicolò Barella',      age:27, position:'CM',  shirtNumber:18, club:'Inter Milan',        teamId:'ita', goals:0, assists:0, appearances:0, marketValue:'€80M'  },
+  { id:'p_ita_4', name:'Alessandro Bastoni',  age:26, position:'CB',  shirtNumber:23, club:'Inter Milan',        teamId:'ita', goals:0, assists:0, appearances:0, marketValue:'€70M'  },
+  { id:'p_ita_5', name:'Federico Dimarco',    age:26, position:'LB',  shirtNumber:3,  club:'Inter Milan',        teamId:'ita', goals:0, assists:0, appearances:0, marketValue:'€55M'  },
+  // URUGUAY
+  { id:'p_uru_1', name:'Federico Valverde',   age:26, position:'CM',  shirtNumber:8,  club:'Real Madrid',        teamId:'uru', goals:0, assists:0, appearances:0, marketValue:'€100M', isStarPlayer:true },
+  { id:'p_uru_2', name:'Darwin Núñez',        age:25, position:'ST',  shirtNumber:11, club:'Liverpool',          teamId:'uru', goals:0, assists:0, appearances:0, marketValue:'€75M'  },
+  { id:'p_uru_3', name:'Diego Godín',         age:38, position:'CB',  shirtNumber:3,  club:'Nacional',           teamId:'uru', goals:0, assists:0, appearances:0, marketValue:'€1M',   isCaptain:true },
+  { id:'p_uru_4', name:'Rodrigo Bentancur',   age:27, position:'CM',  shirtNumber:6,  club:'Tottenham Hotspur',  teamId:'uru', goals:0, assists:0, appearances:0, marketValue:'€40M'  },
+];
+
 // ─── TEAM STATS ───────────────────────────────────────────────────────────────
 
 export const TEAM_STATS: TeamStat[] = TEAMS.map(t => ({
@@ -547,71 +659,83 @@ export const NEWS: NewsItem[] = [
     excerpt:"The 2026 FIFA World Cup will feature an expanded 48-team format with 104 matches spread across 16 stadiums in the USA, Canada, and Mexico — the most ambitious tournament in football history.",
     category:'Tournament', source:'FIFA Official', sourceUrl:'https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026',
     publishedAt:'2026-05-15T10:00:00Z', featured:true, tags:['World Cup 2026','FIFA','Format'], readTime:4,
+    imageUrl:'https://picsum.photos/seed/wc26-n001/800/450',
   },
   {
     id:'n002', title:"Messi's Argentina Begin Title Defense in San Francisco",
     excerpt:"The reigning world champions will kick off their 2026 campaign at Levi's Stadium against Croatia in what promises to be one of the tournament's most anticipated group-stage clashes.",
     category:'Match Preview', source:'ESPN FC', sourceUrl:'https://www.espn.com/soccer/story/_/id/worldcup2026/argentina-croatia-preview',
     publishedAt:'2026-05-20T09:00:00Z', featured:true, tags:['Argentina','Messi','Croatia','Group B'], readTime:5,
+    imageUrl:'https://picsum.photos/seed/wc26-n002/800/450',
   },
   {
     id:'n003', title:'MetLife Stadium Set to Host Tournament Final on August 2',
     excerpt:"New Jersey's MetLife Stadium — the largest venue in the competition at 82,500 capacity — will host the World Cup Final, cementing the New York area as the tournament's crown jewel.",
     category:'Tournament', source:'World Cup HQ', sourceUrl:undefined,
     publishedAt:'2026-05-18T14:00:00Z', featured:false, tags:['MetLife','Final','New York'], readTime:3,
+    imageUrl:'https://picsum.photos/seed/wc26-n003/800/450',
   },
   {
     id:'n004', title:"France Eye Back-to-Back Titles With Mbappé at the Helm",
     excerpt:"Les Bleus head into the tournament as pre-tournament favourites. Kylian Mbappé, now captain, is hungry for the one trophy that has eluded him despite all his club success.",
     category:'Team News', source:'The Guardian', sourceUrl:'https://www.theguardian.com/football/2026/may/22/france-world-cup-preview-mbappe',
     publishedAt:'2026-05-22T11:30:00Z', featured:false, tags:['France','Mbappé','Favourites'], readTime:6,
+    imageUrl:'https://picsum.photos/seed/wc26-n004/800/450',
   },
   {
     id:'n005', title:"USA Soccer on Home Soil: The Nation's Biggest Football Moment",
     excerpt:"With Pochettino at the helm and a golden generation headlined by Pulisic, Reyna, and Adams, the USMNT enters their home tournament with realistic ambitions of making a deep run.",
     category:'Team News', source:'The Athletic', sourceUrl:'https://theathletic.com/worldcup2026/usmnt-home-hopes',
     publishedAt:'2026-05-24T08:00:00Z', featured:true, tags:['USA','USMNT','Pulisic','Host Nation'], readTime:7,
+    imageUrl:'https://picsum.photos/seed/wc26-n005/800/450',
   },
   {
     id:'n006', title:"Estadio Azteca: Three World Cups, One Legendary Ground",
     excerpt:"Mexico City's iconic Estadio Azteca becomes the first venue to host matches at three different World Cups — 1970, 1986, and now 2026. Its atmosphere is like no other on the planet.",
     category:'History', source:'BBC Sport', sourceUrl:'https://www.bbc.com/sport/football/world-cup/azteca-three-world-cups',
     publishedAt:'2026-05-21T16:00:00Z', featured:false, tags:['Azteca','Mexico City','History'], readTime:5,
+    imageUrl:'https://picsum.photos/seed/wc26-n006/800/450',
   },
   {
     id:'n007', title:"Brazil's New-Look Squad Ready to End 24-Year Drought",
     excerpt:"Guided by Dorival Júnior and powered by Vinícius Jr., Rodrygo, and an exciting midfield, the Seleção arrive as dark horses hungry to reclaim football's biggest prize.",
     category:'Team News', source:'ESPN FC', sourceUrl:'https://www.espn.com/soccer/story/_/id/worldcup2026/brazil-2026-preview',
     publishedAt:'2026-05-23T12:00:00Z', featured:false, tags:['Brazil','Vinícius','CONMEBOL'], readTime:5,
+    imageUrl:'https://picsum.photos/seed/wc26-n007/800/450',
   },
   {
     id:'n008', title:"England vs Spain: Group D Is the Marquee Clash of the Group Stage",
     excerpt:"Group D pits England against Spain in a mouthwatering clash that could feature four future Ballon d'Or winners. Bellingham, Kane, Pedri and Yamal all on the same pitch.",
     category:'Analysis', source:'The Guardian', sourceUrl:'https://www.theguardian.com/football/2026/may/25/england-spain-group-d-analysis',
     publishedAt:'2026-05-25T10:00:00Z', featured:false, tags:['England','Spain','Group D','Analysis'], readTime:8,
+    imageUrl:'https://picsum.photos/seed/wc26-n008/800/450',
   },
   {
     id:'n009', title:"Morocco: Africa's Contender Looks to Top Their 2022 Miracle",
     excerpt:"After reaching the semi-finals in Qatar, the Atlas Lions have built on their historic run. Under Regragui, Morocco have become a genuine contender who no team in the draw wants to face.",
     category:'Team News', source:'BBC Sport', sourceUrl:'https://www.bbc.com/sport/football/world-cup/morocco-2026-preview',
     publishedAt:'2026-05-19T14:00:00Z', featured:false, tags:['Morocco','Africa','Hakimi'], readTime:5,
+    imageUrl:'https://picsum.photos/seed/wc26-n009/800/450',
   },
   {
     id:'n010', title:"Germany Rebuilt: Nagelsmann's Side Targets a Fifth Star",
     excerpt:"After the humiliation of early exits in 2018 and 2022, Germany arrive in North America transformed. Florian Wirtz and Jamal Musiala are the most exciting midfield duo in tournament football.",
     category:'Team News', source:'The Athletic', sourceUrl:'https://theathletic.com/worldcup2026/germany-rebuild-2026',
     publishedAt:'2026-05-26T09:00:00Z', featured:false, tags:['Germany','Wirtz','Musiala','UEFA'], readTime:6,
+    imageUrl:'https://picsum.photos/seed/wc26-n010/800/450',
   },
   {
     id:'n011', title:'Opening Ceremony: A Tri-Nation Celebration Kicks Off at Azteca',
     excerpt:"The tournament opens at Estadio Azteca on June 11th with a spectacular ceremony celebrating North American culture. Mexico vs Canada kicks off proceedings under the legendary floodlights.",
     category:'Tournament', source:'FIFA Official', sourceUrl:'https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/opening-ceremony',
     publishedAt:'2026-05-27T11:00:00Z', featured:false, tags:['Opening Ceremony','Azteca','Mexico'], readTime:3,
+    imageUrl:'https://picsum.photos/seed/wc26-n011/800/450',
   },
   {
     id:'n012', title:"Cristiano Ronaldo's Final Dance: Portugal's Veteran Chases History",
     excerpt:"At 41, Ronaldo's inclusion in the Portugal squad is still the most divisive debate in football. But one more World Cup goal would put him in territory no player has ever reached.",
     category:'Analysis', source:'The Guardian', sourceUrl:'https://www.theguardian.com/football/2026/may/28/ronaldo-final-world-cup-portugal',
     publishedAt:'2026-05-28T07:00:00Z', featured:true, tags:['Ronaldo','Portugal','Records'], readTime:7,
+    imageUrl:'https://picsum.photos/seed/wc26-n012/800/450',
   },
 ];

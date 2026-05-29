@@ -116,6 +116,24 @@ export type NewsCategory =
   | 'History'
   | 'Analysis';
 
+export type PlayerPosition = 'GK' | 'CB' | 'LB' | 'RB' | 'CDM' | 'CM' | 'CAM' | 'LW' | 'RW' | 'ST' | 'CF';
+
+export interface Player {
+  id: string;
+  name: string;
+  age: number;
+  position: PlayerPosition;
+  shirtNumber: number;
+  club: string;
+  teamId: string;
+  goals: number;
+  assists: number;
+  appearances: number;
+  marketValue: string;
+  isCaptain?: boolean;
+  isStarPlayer?: boolean;
+}
+
 export interface AskResponse {
   answer: string;
   sources?: string[];
@@ -129,6 +147,7 @@ export interface AppData {
   playerStats: PlayerStat[];
   teamStats: TeamStat[];
   news: NewsItem[];
+  players: Player[];
 }
 
 export interface FilterOptions {
